@@ -16,20 +16,10 @@ Parameters:
   WebsiteS3BucketName:
     Type: String
     Default: ''
-  NewSubscribersTableName:
-    Type: String
-    AllowedPattern: .*
-    Default: AWSMarketplaceSubscribers
-  AWSMarketplaceMeteringRecordsTableName:
-    Type: String
-    AllowedPattern: .*
-    Default: AWSMarketplaceMeteringRecords
   TypeOfSaaSListing:
     Type: String
-    Default: contracts_with_subscription
+    Default: subscriptions
     AllowedValues:
-    - contracts_with_subscription
-    - contracts
     - subscriptions
   ProductCode:
     Type: String
@@ -41,9 +31,6 @@ Parameters:
     Type: String
     AllowedPattern: .*
     Default: ''
-  EntitlementSNSTopic:
-    Type: String
-    Default: ''
   SubscriptionSNSTopic:
     Type: String
     Default: ''
@@ -53,20 +40,8 @@ Parameters:
     AllowedValues:
     - true
     - false
-Conditions:
-  CreateEntitlementLogic:
-    Fn::Or:
-    - Fn::Equals:
-      - Ref: TypeOfSaaSListing
-      - contracts_with_subscription
-    - Fn::Equals:
-      - Ref: TypeOfSaaSListing
-      - contracts
   CreateSubscriptionLogic:
     Fn::Or:
-    - Fn::Equals:
-      - Ref: TypeOfSaaSListing
-      - contracts_with_subscription
     - Fn::Equals:
       - Ref: TypeOfSaaSListing
       - subscriptions
