@@ -77,7 +77,7 @@ Resources:
   SampleApp:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: !Sub "https://${ArtifactBucketName}.s3.amazonaws.com/cloudformation-aws-marketplace-saas/submodules/sam/packaged.yaml"
+      TemplateURL: !Sub "https://github.com/gmatiasben/Sequre/blob/main/packaged.yaml"
       Parameters:
         AWSMarketplaceMeteringRecordsTableName: !Ref AWSMarketplaceMeteringRecordsTableName
         CreateRegistrationWebPage: !Ref CreateRegistrationWebPage
