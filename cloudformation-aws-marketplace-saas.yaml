@@ -1,28 +1,22 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: "AWS Marketplace SaaS entitlement and subscription portal (qs-1s3j136e1)"
+Description: "AWS Marketplace SaaS subscription portal (sequre-quantum)"
 Metadata:
   QuickStartDocumentation:
-    EntrypointName: "Deploy AWS Marketplace SaaS entitlement and subscription portal"
+    EntrypointName: "Deploy AWS Marketplace SaaS subscription portal"
   AWS::CloudFormation::Interface:
     ParameterLabels:
-      AWSMarketplaceMeteringRecordsTableName:
-        default: "Metering records Amazon DynamoDB table name"
       CreateRegistrationWebPage:
         default: "Registration page"
-      EntitlementSNSTopic:
-        default: "Entitlements SNS topic ARN"
       MarketplaceTechAdminEmail:
         default: "Admin email address"
-      NewSubscribersTableName:
-        default: "New subscribers DynamoDB table name"
       ProductCode:
         default: "Product code"
       SubscriptionSNSTopic:
         default: "Subscriptions SNS topic ARN"
-      TypeOfSaaSListing:
-        default: "SaaS pricing model"
       WebsiteS3BucketName:
         default: "S3 bucket name"
+      TypeOfSaaSListing:
+        default: "SaaS pricing model"
       # AWS IA configuration
       ArtifactBucketName:
         default: Artifact S3 bucket name
@@ -30,14 +24,10 @@ Metadata:
       - Label: 
           default: AWS Integration and Automation configuration
         Parameters:
-          - TypeOfSaaSListing
           - CreateRegistrationWebPage
           - WebsiteS3BucketName
           - ProductCode
           - SubscriptionSNSTopic
-          - EntitlementSNSTopic
-          - NewSubscribersTableName
-          - AWSMarketplaceMeteringRecordsTableName
           - MarketplaceTechAdminEmail
       - Label: 
           default: Quick Starts Parameters (Do not change)
@@ -50,23 +40,9 @@ Parameters:
     Default: AWSMarketplaceMeteringRecords
     Description: "Custom value for the metering records table. Value must be unique per product."
     Type: String
-  CreateRegistrationWebPage:
-    AllowedValues:
-      - "true"
-      - "false"
-    Default: "true"
-    Description: "Choose 'true' to create a new registration page hosted by Amazon CloudFront. If you already have a custom registration page, choose 'false'."
-    Type: String
-  EntitlementSNSTopic:
-    Description: "If your product is a SaaS contract, use the entitelement SNS topic provided by AWS Marketplace at the time the limited listing was published."
-    Type: String
   MarketplaceTechAdminEmail:
     Type: String
     Description: "The email address that receives SNS notifications for new customer registrations, entitlement changes, and subscription events."
-  NewSubscribersTableName:
-    Default: AWSMarketplaceSubscribers
-    Description: "The custom value for the New Subscribers table. Value must be unique per product."
-    Type: String
   ProductCode:
     Description: "The product code provided by AWS Marketplace at the time the limited listing was published."
     Type: String
@@ -75,10 +51,8 @@ Parameters:
     Type: String
   TypeOfSaaSListing:
     AllowedValues:
-      - contracts_with_subscription
-      - contracts
       - subscriptions
-    Default: contracts_with_subscription
+    Default: subscriptions
     Description: "The SaaS pricing model of your product."
     Type: String
   WebsiteS3BucketName:
@@ -107,9 +81,7 @@ Resources:
       Parameters:
         AWSMarketplaceMeteringRecordsTableName: !Ref AWSMarketplaceMeteringRecordsTableName
         CreateRegistrationWebPage: !Ref CreateRegistrationWebPage
-        EntitlementSNSTopic: !Ref EntitlementSNSTopic
         MarketplaceTechAdminEmail: !Ref MarketplaceTechAdminEmail
-        NewSubscribersTableName: !Ref NewSubscribersTableName
         ProductCode: !Ref ProductCode
         SubscriptionSNSTopic: !Ref SubscriptionSNSTopic
         TypeOfSaaSListing: !Ref TypeOfSaaSListing
